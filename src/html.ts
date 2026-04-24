@@ -130,7 +130,7 @@ export function renderHomePage(origin: string): string {
     <button type="submit">Create Endpoint</button>
   </form>
   <div id="result" class="result">
-    <label>Your MCP Endpoint (paste this into Claude):</label>
+    <label>Your MCP Endpoint (paste this into your MCP client):</label>
     <code id="endpoint"></code>
   </div>
   <div class="warning">
@@ -141,8 +141,9 @@ export function renderHomePage(origin: string): string {
   </div>
   <div class="disclosure">
     MCP Key2OAuth is an <a href="https://github.com/t0saki/MCP-Key2OAuth" style="color:#60a5fa">open-source</a>
-    OAuth 2.1 shim. It wraps API-key authenticated MCP servers so they work with claude.ai web and mobile.
-    Your API key is encrypted (AES-GCM) within the OAuth token and never stored in plaintext.
+    OAuth 2.1 shim. It wraps API-key authenticated MCP servers so they work with any OAuth-only
+    MCP client (claude.ai, Cursor, etc.). Your API key is encrypted (AES-GCM) within the OAuth token
+    and never stored in plaintext.
   </div>
 </div>
 <script>
