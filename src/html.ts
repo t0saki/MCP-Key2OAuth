@@ -38,12 +38,11 @@ const COMMON_STYLES = `
   }
   .error { color: #f87171; font-size: 0.85rem; margin-bottom: 1rem; }
   .warning {
-    background: #422006; border: 1px solid #92400e; border-radius: 8px;
-    padding: 0.75rem 1rem; margin-bottom: 1.25rem;
-    font-size: 0.8rem; color: #fbbf24; line-height: 1.5;
+    background: #1a1c2e; border: 1px solid #334155; border-radius: 8px;
+    padding: 0.625rem 0.875rem; margin-top: 1rem;
+    font-size: 0.75rem; color: #94a3b8; line-height: 1.5;
   }
-  .warning strong { color: #fde68a; }
-  .warning a { color: #fbbf24; text-decoration: underline; }
+  .warning a { color: #60a5fa; }
 `;
 
 export function renderPastePage(
@@ -67,22 +66,22 @@ export function renderPastePage(
         placeholder="Paste your API key here"></textarea>
     </div>
     <input type="hidden" name="oauth_params" value="${escapeHtml(oauthParamsBase64)}">
-    <div class="warning">
-      <strong>Security notice:</strong> The operator of this deployment can technically decrypt your API key.
-      Only proceed if you trust this deployment. For full control,
-      <a href="https://github.com/t0saki/MCP-Key2OAuth">self-deploy in under 5 minutes</a> with one click.
-    </div>
     <button type="submit">Authorize</button>
   </form>
   <div class="disclosure">
     Your key is encrypted (AES-GCM) within the OAuth token. Its lifetime matches the key itself &mdash;
     revoke the key upstream and access stops immediately. No plaintext keys are stored.
   </div>
+  <div class="warning">
+    The operator of this deployment can technically decrypt your API key.
+    Only proceed if you trust this deployment. For full control,
+    <a href="https://github.com/t0saki/MCP-Key2OAuth">self-deploy</a> in under 5 minutes.
+  </div>
 </div>
 </body></html>`;
 }
 
-export function renderHomePage(origin: string): string {
+export function renderHomePage(_origin: string): string {
   return `<!DOCTYPE html>
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -133,17 +132,16 @@ export function renderHomePage(origin: string): string {
     <label>Your MCP Endpoint (paste this into your MCP client):</label>
     <code id="endpoint"></code>
   </div>
-  <div class="warning">
-    <strong>Security notice:</strong> This is a shared public deployment. The operator can technically
-    decrypt API keys stored in OAuth tokens. If you handle sensitive keys,
-    <a href="https://github.com/t0saki/MCP-Key2OAuth">self-deploy your own instance</a> &mdash;
-    it takes under 5 minutes with one-click deploy on Cloudflare Workers (free tier).
-  </div>
   <div class="disclosure">
     MCP Key2OAuth is an <a href="https://github.com/t0saki/MCP-Key2OAuth" style="color:#60a5fa">open-source</a>
     OAuth 2.1 shim. It wraps API-key authenticated MCP servers so they work with any OAuth-only
     MCP client (claude.ai, Cursor, etc.). Your API key is encrypted (AES-GCM) within the OAuth token
     and never stored in plaintext.
+  </div>
+  <div class="warning">
+    This is a shared public deployment. The operator can technically decrypt API keys in OAuth tokens.
+    For sensitive keys, <a href="https://github.com/t0saki/MCP-Key2OAuth">self-deploy</a> your own
+    instance in under 5 minutes (Cloudflare Workers free tier).
   </div>
 </div>
 <script>
