@@ -21,12 +21,12 @@ Users provide their API key via a paste page during the OAuth authorization flow
 
 #### One-Click Deploy
 
-[![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/t0saki/mcp-key2oauth)
+[![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/t0saki/MCP-Key2OAuth)
 
 #### Manual Deploy
 
 ```bash
-git clone https://github.com/t0saki/mcp-key2oauth.git
+git clone https://github.com/t0saki/MCP-Key2OAuth.git
 cd mcp-key2oauth
 npm install
 
