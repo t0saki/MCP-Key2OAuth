@@ -3,19 +3,24 @@ set -e
 
 echo "Creating KV namespaces..."
 
-OAUTH_KV_ID=$(npx wrangler kv namespace create OAUTH_KV --json 2>/dev/null | python3 -c "import sys,json; print(json.load(sys.stdin)['id'])" 2>/dev/null || echo "")
-SLUG_KV_ID=$(npx wrangler kv namespace create SLUG_KV --json 2>/dev/null | python3 -c "import sys,json; print(json.load(sys.stdin)['id'])" 2>/dev/null || echo "")
+# Create KV namespaces and extract IDs from text output
+OAUTH_KV_OUTPUT=$(npx wrangler kv namespace create OAUTH_KV 2>&1 || true)
+OAUTH_KV_ID=$(echo "$OAUTH_KV_OUTPUT" | grep -o '"id": "[^"]*"' | head -1 | cut -d'"' -f4)
+
+SLUG_KV_OUTPUT=$(npx wrangler kv namespace create SLUG_KV 2>&1 || true)
+SLUG_KV_ID=$(echo "$SLUG_KV_OUTPUT" | grep -o '"id": "[^"]*"' | head -1 | cut -d'"' -f4)
 
 if [ -n "$OAUTH_KV_ID" ] && [ -n "$SLUG_KV_ID" ]; then
-  echo "OAUTH_KV namespace ID: $OAUTH_KV_ID"
-  echo "SLUG_KV namespace ID: $SLUG_KV_ID"
-
-  # Update wrangler.jsonc with real IDs
-  sed -i.bak "s/PLACEHOLDER_OAUTH_KV_ID/$OAUTH_KV_ID/g" wrangler.jsonc
-  sed -i.bak "s/PLACEHOLDER_SLUG_KV_ID/$SLUG_KV_ID/g" wrangler.jsonc
-  rm -f wrangler.jsonc.bak
+  echo "OAUTH_KV ID: $OAUTH_KV_ID"
+  echo "SLUG_KV ID: $SLUG_KV_ID"
+  sed -i "s/PLACEHOLDER_OAUTH_KV_ID/$OAUTH_KV_ID/g" wrangler.jsonc
+  sed -i "s/PLACEHOLDER_SLUG_KV_ID/$SLUG_KV_ID/g" wrangler.jsonc
 else
-  echo "KV namespaces may already exist, attempting deploy with existing config..."
+  echo "Warning: Could not create KV namespaces automatically."
+  echo "Please create them manually and update wrangler.jsonc."
+  echo "OAUTH_KV output: $OAUTH_KV_OUTPUT"
+  echo "SLUG_KV output: $SLUG_KV_OUTPUT"
+  exit 1
 fi
 
 echo "Deploying worker..."

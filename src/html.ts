@@ -37,6 +37,13 @@ const COMMON_STYLES = `
     padding: 0.125rem 0.5rem; border-radius: 4px; font-size: 0.75rem;
   }
   .error { color: #f87171; font-size: 0.85rem; margin-bottom: 1rem; }
+  .warning {
+    background: #422006; border: 1px solid #92400e; border-radius: 8px;
+    padding: 0.75rem 1rem; margin-bottom: 1.25rem;
+    font-size: 0.8rem; color: #fbbf24; line-height: 1.5;
+  }
+  .warning strong { color: #fde68a; }
+  .warning a { color: #fbbf24; text-decoration: underline; }
 `;
 
 export function renderPastePage(
@@ -60,14 +67,16 @@ export function renderPastePage(
         placeholder="Paste your API key here"></textarea>
     </div>
     <input type="hidden" name="oauth_params" value="${escapeHtml(oauthParamsBase64)}">
+    <div class="warning">
+      <strong>Security notice:</strong> The operator of this deployment can technically decrypt your API key.
+      Only proceed if you trust this deployment. For full control,
+      <a href="https://github.com/t0saki/MCP-Key2OAuth">self-deploy in under 5 minutes</a> with one click.
+    </div>
     <button type="submit">Authorize</button>
   </form>
   <div class="disclosure">
-    <strong>How your API key is handled:</strong><br>
-    Your key is encrypted and stored within the OAuth token. Its lifetime matches the key itself &mdash;
-    revoke the key upstream and access stops immediately.
-    The worker operator can technically decrypt tokens. Only use deployments you trust.
-    For full control, <a href="https://github.com/anthropics/mcp-key2oauth" style="color:#60a5fa">self-deploy</a>.
+    Your key is encrypted (AES-GCM) within the OAuth token. Its lifetime matches the key itself &mdash;
+    revoke the key upstream and access stops immediately. No plaintext keys are stored.
   </div>
 </div>
 </body></html>`;
@@ -124,10 +133,16 @@ export function renderHomePage(origin: string): string {
     <label>Your MCP Endpoint (paste this into Claude):</label>
     <code id="endpoint"></code>
   </div>
+  <div class="warning">
+    <strong>Security notice:</strong> This is a shared public deployment. The operator can technically
+    decrypt API keys stored in OAuth tokens. If you handle sensitive keys,
+    <a href="https://github.com/t0saki/MCP-Key2OAuth">self-deploy your own instance</a> &mdash;
+    it takes under 5 minutes with one-click deploy on Cloudflare Workers (free tier).
+  </div>
   <div class="disclosure">
-    MCP Key2OAuth is an open-source OAuth 2.1 shim. It wraps API-key authenticated MCP servers
-    so they work with claude.ai web and mobile. Your API key is encrypted within the OAuth token
-    and never stored in plaintext. <a href="https://github.com/anthropics/mcp-key2oauth" style="color:#60a5fa">GitHub</a>
+    MCP Key2OAuth is an <a href="https://github.com/t0saki/MCP-Key2OAuth" style="color:#60a5fa">open-source</a>
+    OAuth 2.1 shim. It wraps API-key authenticated MCP servers so they work with claude.ai web and mobile.
+    Your API key is encrypted (AES-GCM) within the OAuth token and never stored in plaintext.
   </div>
 </div>
 <script>

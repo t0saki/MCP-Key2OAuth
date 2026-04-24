@@ -4,7 +4,7 @@
   "compatibility_date": "2025-04-01",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
   "kv_namespaces": [
-    { "binding": "OAUTH_KV", "id": "PLACEHOLDER_OAUTH_KV_ID" },
-    { "binding": "SLUG_KV", "id": "PLACEHOLDER_SLUG_KV_ID" }
+    { "binding": "OAUTH_KV", "id": "0ba09d5b97a94455816124e3eddc42e4" },
+    { "binding": "SLUG_KV", "id": "6a93b615180445fa88b89d13908a3e99" }
   ]
 }
