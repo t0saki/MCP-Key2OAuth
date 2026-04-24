@@ -1,0 +1,10 @@
+{
+  "name": "mcp-key2oauth",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-04-01",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "kv_namespaces": [
+    { "binding": "OAUTH_KV", "id": "PLACEHOLDER_OAUTH_KV_ID" },
+    { "binding": "SLUG_KV", "id": "PLACEHOLDER_SLUG_KV_ID" }
+  ]
+}
